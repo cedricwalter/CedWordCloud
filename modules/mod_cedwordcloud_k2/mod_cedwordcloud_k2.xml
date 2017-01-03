@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.4" client="site" method="upgrade">
+    <name>MOD_CEDWORDCLOUD_K2</name>
+
+    <author>Galaxiis</author>
+    <creationDate>2016-12-31</creationDate>
+
+    <copyright>Copyright (C) 2013-2016 galaxiis.com All rights reserved.</copyright>
+    <license>http://confluence.galaxiis.com/display/GAL/SOFTWARE+LICENSE+AGREEMENT</license>
+    <authorEmail>galaxiiscom@gmail.com</authorEmail>
+    <authorUrl>www.galaxiis.com</authorUrl>
+
+    <version>1.8.1</version>
+
+    <description>MOD_CEDWORDCLOUD_K2_XML_DESCRIPTION</description>
+    <languages>
+        <language tag="en-GB">en-GB.mod_cedwordcloud_k2.ini</language>
+        <language tag="en-GB">en-GB.mod_cedwordcloud_k2.sys.ini</language>
+    </languages>
+
+    <files>
+        <filename module="mod_cedwordcloud_k2">mod_cedwordcloud_k2.php</filename>
+        <filename module="mod_cedwordcloud_k2">helper.php</filename>
+        <folder>tmpl</folder>
+        <filename>index.html</filename>
+    </files>
+
+    <config addfieldpath="libraries/galaxiis/fields">
+        <fields name="params">
+            <fieldset name="basic">
+                <field shortId="cedwordcloud"
+                       name="toolbar"
+                       type="galaxiisbar"/>
+                <field
+                        name="message"
+                        type="galaxiismessage"
+                        message="note"
+                        label="Please help us: vote, suggest and give us your opinion in the Joomla extensions directory. With this you will help us to increase our interest to modify and update the extension. Thank you very much."/>
+                <field
+                        name="version_msg"
+                        type="galaxiismessage"
+                        message="version"
+                        version="1.8.1"
+                        extension_name="CedWordCloud"/>
+            </fieldset>
+            <fieldset name="Tags" label="Tags" addfieldpath="/administrator/components/com_k2/elements/">
+                <field
+                        name="maximum"
+                        type="integer"
+                        default="200"
+                        first="10"
+                        last="2000"
+                        step="10"
+                        label="Count"
+                        description="Max number of tags to display in wordle cloud (Default is 25).">
+                </field>
+
+                <field name="cloud_category" type="categories" multiple="multiple" default="0" label="K2 Categories" description="Categories. Default is None."/>
+
+            </fieldset>
+            <fieldset name="Layout" label="Layout" >
+                <field name="width" type="integer" size="5" default="600" label="Width in px"
+                       description="Width for the page (Default is 600)."
+                       first="0"
+                       last="1000"
+                       step="1"
+                />
+                <field name="height" type="integer" size="5" default="600" label="Height in px"
+                       description="Height for the page (Default is 600)."
+                       first="0"
+                       last="1000"
+                       step="1"
+                />
+
+                <field name="shape" type="list" default="circle" label="Shape"
+                       description="The shape of the cloud to draw.."
+                       class="btn-group">
+                    <option value="diamond">square</option>
+                    <option disabled="true" value="">Circle</option>
+                    <option disabled="true" value="">Cardioid (apple or heart shape curve)</option>
+                    <option disabled="true" value="">Triangle-forward</option>
+                    <option disabled="true" value="">Triangle</option>
+                    <option disabled="true" value="">Triangle-upright</option>
+                    <option disabled="true" value="">Pentagon</option>
+                    <option disabled="true" value="">Star</option>
+                </field>
+            </fieldset>
+
+            <fieldset name="Behavior" label="Behavior">
+                <field name="spacer_time" type="spacer"
+                       label="&lt;div style=&quot;font-weight:bold;font-size:11px;color:#000;padding:8px;margin:0;background:#ffd;&quot;&gt;'Get more settings' &lt;a target=&quot;_blank&quot; href=&quot;http://www.galaxiis.com/cedwordcloud-subscribe/&quot;&gt;get the Premium Version of CedWordCloud now.&lt;/a&gt;&lt;/div&gt;"
+                       default="" description=""/>
+
+                <field name="newWindows" type="radio" default="0" label="Open Tag in new windows"
+                       description="Open Tag in new windows. Default is Yes" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+            </fieldset>
+
+            <fieldset name="font" label="Fonts">
+
+                <field name="google" type="externalLink" default="0" label=""
+                       text="Find your favorite font on"
+                       url="https://www.google.com/webfonts"
+                       link="Google Web Fonts."
+                       showon="use-webfont:1"
+                       description="" class="btn-group">
+                </field>
+
+                <field name="use-webfont" type="radio" default="0" label="Use Webfont"
+                       description="Use Google webfont. Default is No" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+
+                <field name="webfont" type="text"
+                       default="https://fonts.googleapis.com/css?family=Finger+Paint"
+                       placeholder="https://fonts.googleapis.com/css?family=Libre+Baskerville:700"
+                       label="WebFont"
+                       showon="use-webfont:1"
+                       description="Find your favorite font on Google Web Fonts. https://www.google.com/webfonts"/>
+
+                <field name="webfont-family" type="text"
+                       default="Finger Paint, cursive, sans-serif"
+                       placeholder="Finger Paint, cursive, sans-serif"
+                       label="WebFont Family"
+                       showon="use-webfont:1"
+                       description="Find your favorite font on Google Web Fonts. https://www.google.com/webfonts"/>
+
+                <field name="fontWeight" type="list" default="normal" label="Font Weight"
+                       description="font weight to use.">
+                    <option value="normal">normal</option>
+                    <option disabled="true" value="">bold</option>
+                </field>
+                <field name="minFontSize" type="integer" size="3" default="10" label="Minimum Font Size"
+                       description="Minimum font size to draw on the canvas. Default is 10."
+                       first="0"
+                       last="127"
+                       step="1"
+                />
+                <field name="maxFontSize" type="integer" size="3" default="40" label="Maximum Font Size"
+                       description="Minimum font size to draw on the canvas. Default is 40."
+                       first="0"
+                       last="127"
+                       step="1"
+                />
+                <field name="formula" type="list" default="normal" label="Formula"
+                       description="formula to calculate the font-size for tags in a tag-cloud. use a linear or logarithmic assessment of the number of items associated with a certain tag relative to the largest tag">
+                    <option value="linear">linear</option>
+                    <option value="logarithmic">logarithmic</option>
+                </field>
+
+                <field name="fontFamily" type="list" default="none" label="Font Family"
+                       description="The font-family property should hold several font names as a 'fallback' system, to ensure maximum compatibility between browsers/operating systems. If the browser does not support the first font, it tries the next font.
+                        Start with the font you want, and end with a generic family, to let the browser pick a similar font in the generic family, if no other fonts are available"
+                       class="btn-group"
+                       showon="use-webfont:0">
+                    <option value="none">None</option>
+                    <option value="Georgia, serif">Georgia, serif</option>
+                    <option value="'Times New Roman', Times, serif">"Times New Roman", Times, serif</option>
+                    <option value="Arial, Helvetica, sans-serif">Arial, Helvetica, sans-serif</option>
+                    <option value="'Arial Black', Gadget, sans-serif">"Arial Black", Gadget, sans-serif</option>
+                    <option value="'Comic Sans MS', cursive, sans-serif">"Comic Sans MS", cursive, sans-serif</option>
+                    <option value="Tahoma, Geneva, sans-serif">Tahoma, Geneva, sans-serif</option>
+                    <option value="'Trebuchet MS', Helvetica, sans-serif">"Trebuchet MS", Helvetica, sans-serif</option>
+                    <option value="Verdana, Geneva, sans-serif">Verdana, Geneva, sans-serif</option>
+                    <option value="'Courier New', Courier, monospace">"Courier New", Courier, monospace</option>
+                    <option value="'Lucida Console', Monaco, monospace">"Lucida Console", Monaco, monospace</option>
+                </field>
+
+            </fieldset>
+
+            <fieldset name="Color" label="Color" >
+                <field name="random-color" type="list" default="normal" label="Random Color"
+                       description="Color Sheme. Default is Random Dark Color.">
+                    <option value="random-dark">Random Dark Color</option>
+                    <option disabled="true" value="">Random Light Color</option>
+                </field>
+
+
+                <!--<field name="backgroundColor" type="color"-->
+                <!--validate="color"-->
+                <!--disabled="true"-->
+                <!--size="6" default="FFFFFF" label="Background Color"-->
+                <!--description="Color of the background. Default is White."/>-->
+
+            </fieldset>
+
+            <fieldset name="Content" label="Content" >
+                <field name="clearCanvas" type="radio" default="true" label="Clear Canvas"
+                       description="Paint the entire canvas with background color and consider it empty before start. Default is Yes."
+                       class="btn-group">
+                    <option value="true">JYES</option>
+                    <option value="false">JNO</option>
+                </field>
+                <field name="automaticGridSize" type="radio" default="0" label="Automatic Grid Size"
+                       description="Automatic Grid Size based on width of canvas. Default is No." class="btn-group">
+                    <option disabled="true" value="0">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="gridSize" type="integer" size="2" default="2" label="Grid Size"
+                       showon="automaticGridSize:0"
+                       description="Size of the grid in pixels for marking the availability of the canvas — the larger the grid size, the bigger the gap between words. Default is 2."
+                       first="0"
+                       last="20"
+                       step="1"
+                />
+
+                <field name="rotateRatio" type="list" default="0.1" label="Rotate Ratio in %"
+                       description="Rotate Ratio. 0% Never, 100% Always. Default is 10%.">
+                    <option value="0">0</option>
+                    <option value="0.1">10%</option>
+
+                    <option disabled="true" value="">20%</option>
+                    <option disabled="true" value="">30%</option>
+                    <option disabled="true" value="">40%</option>
+                    <option disabled="true" value="">50%</option>
+                    <option disabled="true" value="">60%</option>
+                    <option disabled="true" value="">70</option>
+                    <option disabled="true" value="">80%</option>
+                    <option disabled="true" value="">90%</option>
+                    <option disabled="true" value="">100%</option>
+
+                </field>
+
+
+            </fieldset>
+
+            <fieldset name="advanced">
+                <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL"
+                       description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+                <field name="moduleclass_sfx" type="textarea" rows="3" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+                       description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"/>
+                <field name="cache" type="list" default="1" label="COM_MODULES_FIELD_CACHING_LABEL"
+                       description="COM_MODULES_FIELD_CACHING_DESC">
+                    <option value="1">JGLOBAL_USE_GLOBAL</option>
+                    <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+                </field>
+                <field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+                       description="COM_MODULES_FIELD_CACHE_TIME_DESC"/>
+                <field name="cachemode" type="hidden" default="static">
+                    <option value="static"/>
+                </field>
+            </fieldset>
+
+        </fields>
+    </config>
+</extension>
