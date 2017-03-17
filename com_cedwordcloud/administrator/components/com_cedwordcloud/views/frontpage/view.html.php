@@ -27,7 +27,7 @@ class CedWordcloudViewFrontpage extends JViewLegacy
 
     function defaultTpl($tpl = null)
     {
-        $version = "1.8.1";
+        $version = "3.0.2";
         $isFree = strpos($version, 'free') !== false ? " " : " (Licensed) ";
         JToolBarHelper::title(JText::_('CedWordcloud '). $version. $isFree , 'tag.png');
 
@@ -42,16 +42,6 @@ class CedWordcloudViewFrontpage extends JViewLegacy
         }
 
         parent::display($tpl);
-    }
-
-    /**
-     * @return SimpleXMLElement
-     */
-    private function getXml()
-    {
-        $xmlFile = JPATH_ADMINISTRATOR . '/components/com_cedthumbnails/cedthumbnails.xml';
-        $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement');
-        return $xml;
     }
 
 }

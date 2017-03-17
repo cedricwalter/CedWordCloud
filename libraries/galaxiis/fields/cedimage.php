@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     CedWordCloud
- * @subpackage  com_cedwordle
- * http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL 3.0</license>
+ * @package     Galaxiis
+ * @subpackage  Galaxiis
+ *
  * @copyright   Copyright (C) 2013-2016 galaxiis.com All rights reserved.
  * @license     The author and holder of the copyright of the software is Cédric Walter. The licensor and as such issuer of the license and bearer of the
  *              worldwide exclusive usage rights including the rights to reproduce, distribute and make the software available to the public
@@ -10,19 +10,17 @@
  *              see LICENSE.txt
  */
 
-// Don't allow direct access to the module.
-defined('_JEXEC') or die('Restricted access');
+defined('JPATH_PLATFORM') or die;
 
-class CedWordcloudCustomHelper
+class JFormFieldCedImage extends JFormField
 {
 
-    public static function getList($tags)
-    {
-    	$list = array();
+	protected $type = 'CedImage';
+    protected $source = '';
 
-
-        return $list;
-    }
-
-
+	protected function getInput()
+	{
+		$image = $this->element['source'];
+		return '<img src="'.JUri::root().$image.'">' ;
+	}
 }

@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     cedThumbnails
- * @subpackage  com_cedthumbnails
+ * @package     CedWordCloud
+ * @subpackage  com_cedwordle
  *
  * @copyright   Copyright (C) 2013-2016 galaxiis.com All rights reserved.
  * @license     The author and holder of the copyright of the software is Cédric Walter. The licensor and as such issuer of the license and bearer of the
@@ -15,107 +15,53 @@ defined('_JEXEC') or die('Restricted access');
 // Load the javascript
 JHtml::_('behavior.framework');
 JHtml::_('behavior.modal', 'a.modal');
+
+$document = JFactory::getDocument();
+$document->addStyleSheet("https://netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.css");
+
 ?>
 
-<div class="tagpanel">
+<h1>CedWordCloud 3.0.2 <?php echo $this->isFree; ?></h1>
 
-    <div style="float: left;">
-        <div class="icon">
-            <a href="index.php?option=com_cedwordcloud&view=liveupdate"
-               title="<?php echo JText::_('Live Update');?>"> <img
-                    src="<?php echo JURI::root() ?>/media/com_cedwordcloud/images/update_48x48.png"
-                    alt="<?php echo JText::_('Live Update');?>"/>
-                <span><?php echo JText::_('Live Update');?></span></a></div>
+<div>
+
+    <div>
+        <a href="https://www.galaxiis.com/" target="_blank" title="Home"><i class="fa fa-home fa-4x" aria-hidden="true">  Home.</i></a>
     </div>
-    <div style="float: left;">
-        <div class="icon"><a href="https://www.galaxiis.com/" target="_blank"
-                             title="<?php echo JText::_('HOME PAGE');?>"> <img
-                src="<?php echo JUri::root() ?>/media/com_cedwordcloud/images/galaxiis3.jpg"/>
-            <span><?php echo JText::_('Home');?></span></a>
-        </div>
+    <div>
+        <a href="https://www.galaxiis.com/cedwordcloud-doc/" target="_blank" title="Documentation"><i class="fa fa-book fa-4x" aria-hidden="true">  Documentation.</i></a>
     </div>
-    <div style="float: left;">
-        <div class="icon"><a
-                href="https://www.galaxiis.com/cedwordcloud-doc/"
-                target="_blank"
-                title="<?php echo JText::_('Manual');?>"> <img
-                src="<?php echo JURI::root() ?>/media/com_cedwordcloud/images/manual.png"/>
-            <span><?php echo JText::_('Manual');?></span></a>
-        </div>
+    <div>
+
+        <a href="https://www.galaxiis.com/forums/" target="_blank" title="Forums"><i class="fa fa-life-ring fa-4x" aria-hidden="true">  Forums.</i></a>
     </div>
-    <div style="float: left;">
-        <div class="icon"><a
-                href="https://www.galaxiis.com/forums/"
-                target="_blank"
-                title="<?php echo JText::_('Forums');?>"> <img
-                src="<?php echo JURI::root() ?>/media/com_cedwordcloud/images/forum.png"/>
-            <span><?php echo JText::_('Forums');?></span></a>
-        </div>
-    </div>
-    <div style="float: left;">
-        <div class="icon"><a
-                href="https://confluence.galaxiis.com/display/GAL/SOFTWARE+LICENSE+AGREEMENT"
-                target="_blank"
-                title="<?php echo JText::_('License');?>"> <img
-                src="<?php echo JURI::root() ?>/media/com_cedwordcloud/images/license.png"/>
-            <span><?php echo JText::_('License');?></span></a>
-        </div>
+    <div>
+        <a href="http://documentation.galaxiis.com/license" target="_blank" title="License"><i class="fa fa-gavel fa-4x" aria-hidden="true">  License.</i></a>
     </div>
 
-
-    <div style="float: left;">
+    <div>
+        <a href="https://www.galaxiis.com/cedwordcloud-jed/" target="_blank" title="Joomla JED review"><i class="fa fa-joomla fa-4x" aria-hidden="true"> Joomla JED review.</i></a>
+    </div>
+    <div>
         <div class="icon">
-            <a href="https://www.galaxiis.com/cedwordcloud-jed/"
-               target="_blank"
-               title="<?php echo JText::_('JED VOTE');?>"> <img
-                    src="<?php echo JURI::root() ?>/media/com_cedwordcloud/images/jed.png"/>
-                <span><?php echo JText::_('JED vote');?></span></a>
+            <a href="https://www.galaxiis.com/cedwordcloud-download/" target="_blank" title="Download latest free version">
+                <i class="fa fa-download fa-4x" aria-hidden="true"> 
+                    Download latest free version.</i></a>
         </div>
     </div>
-    <div style="float: left;">
-        <div class="icon">
-            <a href="https://www.galaxiis.com/cedwordcloud-download/"
-               target="_blank"
-               title="<?php echo JText::_('Download');?>"> <img
-                    src="<?php echo JURI::root() ?>/media/com_cedwordcloud/images/download.png"/>
-                <span><?php echo JText::_('Download');?></span></a>
-        </div>
+    <div>
+        <a href="https://www.facebook.com/galaxiiscom" target="_blank" title="Like Us on Facebook"><i class="fa fa-facebook fa-4x" aria-hidden="true"> 
+                Like Galaxiis on Facebook.</i></a>
     </div>
-    <div style="float: left;">
-        <div class="icon">
-            <a href="https://www.facebook.com/galaxiiscom"
-               target="_blank"
-               title="<?php echo JText::_('Like on Facebook');?>"> <img
-                    src="<?php echo JURI::root() ?>/media/com_cedwordcloud/images/facebook.png"/>
-                <span><?php echo JText::_('Like on Facebook');?></span></a>
-        </div>
+    <div>
+        <a href="https://www.twitter.com/galaxiiscom" target="_blank" title="Follow Us on Twitter"><i class="fa fa-twitter fa-4x" aria-hidden="true"> 
+                Follow Galaxiis on Twitter.</i></a>
     </div>
-    <div style="float: left;">
-        <div class="icon">
-            <a href="https://twitter.com/galaxiiscom"
-               target="_blank"
-               title="<?php echo JText::_('Follow Me on Twitter');?>"> <img
-                    src="<?php echo JURI::root() ?>/media/com_cedwordcloud/images/twitter.png"/>
-                <span><?php echo JText::_('Follow Me on Twitter');?></span></a>
-        </div>
-    </div>
-    <div style="float: left;">
-        <div class="icon">
-            <a href="https://plus.google.com/u/0/104558366166000378462"
-               target="_blank"
-               title="<?php echo JText::_('Follow Me on Google+');?>"> <img
-                    src="<?php echo JURI::root() ?>/media/com_cedwordcloud/images/google.png"/>
-                <span><?php echo JText::_('Follow Me on Google+');?></span></a>
-        </div>
+    <div>
+        <a href="https://plus.google.com/u/0/104558366166000378462" target="_blank" title="Follow Me on Google+"><i class="fa fa-google-plus fa-4x" aria-hidden="true"> 
+                Follow Galaxiis on Google+</i></a>
     </div>
 </div>
+<div></div>
+<p>Copyright (C) 2013-2016 galaxiis.com All rights reserved.</p>
 
-<div class="tagversion">
-
-    <h1>CedWordcloud 1.8.1 <?php echo $this->isFree; ?></h1>
-
-        <h3>join now - get the licensed version of CedWordcloud and enjoy more customizations and features!</h3>
-        <a href="https://www.galaxiis.com/cedwordcloud-subscribe/" alt="join now" title="join now - get the licensed version of CedWordcloud and enjoy more customizations and features!" target="_new"><img src="<?php echo JURI::root() ?>/media/com_cedwordcloud/images/joinnow.png" /></a>
-
-    <p>Copyright (C) 2013-2016 galaxiis.com All rights reserved.</p>
-</div>

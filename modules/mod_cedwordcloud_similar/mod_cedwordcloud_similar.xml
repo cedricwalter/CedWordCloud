@@ -3,14 +3,14 @@
     <name>MOD_CEDWORDCLOUD_SIMILAR</name>
 
     <author>Galaxiis</author>
-    <creationDate>2016-12-31</creationDate>
+    <creationDate>2017-03-17</creationDate>
 
     <copyright>Copyright (C) 2013-2016 galaxiis.com All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL 3.0</license>
     <authorEmail>galaxiiscom@gmail.com</authorEmail>
     <authorUrl>www.galaxiis.com</authorUrl>
 
-    <version>1.8.1</version>
+    <version>3.0.2</version>
 
     <description>MOD_CEDWORDCLOUD_SIMILAR_XML_DESCRIPTION</description>
     <languages>
@@ -35,13 +35,17 @@
                         message="note"
                         label="Please help us: vote, suggest and give us your opinion in the Joomla extensions directory. With this you will help us to increase our interest to modify and update the extension. Thank you very much."/>
                 <field
+                        name="downloadid"
+                        type="galaxiisdownloadid"
+                        message="download id"
+                />
+                <field
                         name="version_msg"
                         type="galaxiismessage"
                         message="version"
-                        version="1.8.1"
+                        version="3.0.2"
                         extension_name="CedWordCloud"/>
-            </fieldset>
-            <fieldset name="Options" label="Options">
+
                 <field
                         name="maximum"
                         type="integer"
@@ -90,6 +94,11 @@
                        last="1000"
                        step="1"
                 />
+                <field name="drawOutOfBound" type="radio" default="0" label="Draw Out Of Bound"
+                       description="Set to `true` to allow word being draw partly outside of the canvas. Allow word bigger than the size of the canvas to be drawn. Default is False" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
 
                 <field name="shape" type="list" default="circle" label="Shape"
                        description="The shape of the cloud to draw.."
@@ -194,11 +203,6 @@
                 </field>
 
 
-                <!--<field name="backgroundColor" type="color"-->
-                <!--validate="color"-->
-                <!--disabled="true"-->
-                <!--size="6" default="FFFFFF" label="Background Color"-->
-                <!--description="Color of the background. Default is White."/>-->
 
                 <field name="Content-spacer" type="spacer" label="Content"/>
 

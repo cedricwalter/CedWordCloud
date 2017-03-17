@@ -18,10 +18,5 @@ require_once __DIR__ . '/helper.php';
 
 $list = CedWordcloudK2Helper::getList($params);
 
-if (!count($list) && !$params->get('no_results_text'))
-{
-    return;
-}
-
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 require JModuleHelper::getLayoutPath('mod_cedwordcloud_k2', $params->get('layout', 'default'));

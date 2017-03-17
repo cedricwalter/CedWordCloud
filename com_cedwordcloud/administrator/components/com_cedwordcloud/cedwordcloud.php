@@ -13,13 +13,6 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-require_once JPATH_COMPONENT_ADMINISTRATOR.'/liveupdate/liveupdate.php';
-if( JFactory::getApplication()->input->get('view','') == 'liveupdate') {
-    JToolBarHelper::preferences( 'com_cedwordcloud' );
-    LiveUpdate::handleRequest();
-    return;
-}
-
 jimport('joomla.application.component.controller');
 require_once (JPATH_COMPONENT . '/controller.php');
 

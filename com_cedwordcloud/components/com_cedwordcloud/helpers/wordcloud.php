@@ -27,7 +27,7 @@ class CedWordCloudGenerator
 
 	public function getScriptUrl()
 	{
-		return JUri::base() . "media/com_cedwordcloud/js/wordcloud2.js?v=1.8.1";
+		return JUri::base() . "media/com_cedwordcloud/js/wordcloud2.js?v=3.0.2";
 	}
 
 	public function getClickableScriptDeclaration($params, $list)
@@ -42,9 +42,10 @@ class CedWordCloudGenerator
 		$minRotation     = $params->get('minRotation2', 0);
 		$maxRotation     = $params->get('maxRotation2', 0);
 		$rotateRatio     = $params->get('rotateRatio', 0);
-		$backgroundColor = $params->get('backgroundColor', '#FFFFFF');
+		$backgroundColor = $params->get('backgroundColor', 'rgba(255, 255, 255, 0)');
 
 		$clearCanvas = $params->get('clearCanvas', true);
+		$drawOutOfBound = $params->get('drawOutOfBound', true);
 
 		$fontFamily = "fontFamily: 'Average, Times, serif',";
 
@@ -73,6 +74,7 @@ class CedWordCloudGenerator
           $color
           $fontFamily
           clearCanvas: $clearCanvas,
+          drawOutOfBound: $drawOutOfBound,
           shuffle: false,
           backgroundColor: '$backgroundColor',
           $handler

@@ -19,11 +19,6 @@ require_once __DIR__ . '/helper.php';
 $tags = $params->get('tags');
 $list = CedWordcloudCustomHelper::getList($tags);
 
-if (!count($list) && !$params->get('no_results_text'))
-{
-    return;
-}
-
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 $rotating_shape = $params->get('rotating-shape', 'sphere');
 

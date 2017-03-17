@@ -27,11 +27,6 @@ $cacheParams->modeparams = array('id' => 'array', 'Itemid' => 'int');
 
 $list = JModuleHelper::moduleCache($module, $params, $cacheParams);
 
-if (!count($list))
-{
-    return;
-}
-
 $moduleclass_sfx	= htmlspecialchars($params->get('moduleclass_sfx'));
 $rotating_shape = $params->get('rotating-shape', 'sphere');
 

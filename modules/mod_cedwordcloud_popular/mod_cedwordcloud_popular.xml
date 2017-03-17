@@ -3,14 +3,14 @@
     <name>CedWordcloud Popular | Galaxiis.com</name>
 
     <author>Galaxiis</author>
-    <creationDate>2016-12-31</creationDate>
+    <creationDate>2017-03-17</creationDate>
 
     <copyright>Copyright (C) 2013-2016 galaxiis.com All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL 3.0</license>
     <authorEmail>galaxiiscom@gmail.com</authorEmail>
     <authorUrl>www.galaxiis.com</authorUrl>
 
-    <version>1.8.1</version>
+    <version>3.0.2</version>
 
     <description>MOD_CEDWORDCLOUD_POPULAR_XML_DESCRIPTION</description>
     <languages>
@@ -35,15 +35,16 @@
                         message="note"
                         label="Please help us: vote, suggest and give us your opinion in the Joomla extensions directory. With this you will help us to increase our interest to modify and update the extension. Thank you very much."/>
                 <field
+                        name="downloadid"
+                        type="galaxiisdownloadid"
+                        message="download id"
+                />
+                <field
                         name="version_msg"
                         type="galaxiismessage"
                         message="version"
-                        version="1.8.1"
+                        version="3.0.2"
                         extension_name="CedWordCloud"/>
-            </fieldset>
-
-            <fieldset name="Options" label="Options">
-
                 <field
                         name="maximum"
                         type="integer"
@@ -139,6 +140,11 @@
                        last="1000"
                        step="1"
                 />
+                <field name="drawOutOfBound" type="radio" default="0" label="Draw Out Of Bound"
+                       description="Set to `true` to allow word being draw partly outside of the canvas. Allow word bigger than the size of the canvas to be drawn. Default is False" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
 
                 <field name="shape" type="list" default="circle" label="Shape"
                        description="The shape of the cloud to draw.."
@@ -157,6 +163,13 @@
                 <field name="spacer_time" type="spacer"
                        label="&lt;div style=&quot;font-weight:bold;font-size:11px;color:#000;padding:8px;margin:0;background:#ffd;&quot;&gt;'Get more settings' &lt;a target=&quot;_blank&quot; href=&quot;http://www.galaxiis.com/cedwordcloud-subscribe/&quot;&gt;get the Premium Version of CedWordCloud now.&lt;/a&gt;&lt;/div&gt;"
                        default="" description=""/>
+                    <field name="tagcloudClick" type="radio" default="1" label="Click On Tags"
+                           description="Make the wordcloud Interactive. Default is No" class="btn-group"
+                           showon="layout:_:default"
+                           disabled="true">
+                        <option value="1">JYES</option>
+                        <option value="0">JNO</option>
+                    </field>
 
                 <field name="newWindows" type="radio" default="0" label="Open Tag in new windows"
                        description="Open Tag in new windows. Default is Yes" class="btn-group">
@@ -261,7 +274,6 @@
                 <field name="automaticGridSize" type="radio" default="0" label="Automatic Grid Size"
                        description="Automatic Grid Size based on width of canvas. Default is No." class="btn-group"
                        showon="layout:_:default">
-                    <option disabled="true" value="0">JYES</option>
                     <option value="0">JNO</option>
                 </field>
                 <field name="gridSize" type="integer" size="2" default="2" label="Grid Size"
