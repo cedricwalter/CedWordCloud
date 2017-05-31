@@ -179,6 +179,7 @@ if (!window.clearImmediate) {
             fontFamily: '"Trebuchet MS", "Heiti TC", "微軟正黑體", ' +
             '"Arial Unicode MS", "Droid Fallback Sans", sans-serif',
             fontWeight: 'normal',
+            fontStyle: 'normal',
             color: 'random-dark',
             minSize: 0, // 0 to disable
             weightFactor: 1,
@@ -516,7 +517,7 @@ if (!window.clearImmediate) {
             var fcanvas = document.createElement('canvas');
             var fctx = fcanvas.getContext('2d', { willReadFrequently: true });
 
-            fctx.font = settings.fontWeight + ' ' +
+            fctx.font =  settings.fontWeight + ' ' +
                 (fontSize * mu).toString(10) + 'px ' + settings.fontFamily;
 
             // Estimate the dimension of the text with measureText().

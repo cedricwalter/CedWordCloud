@@ -4,15 +4,15 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <name>com_cedwordcloud</name>
     <element>cedwordcloud</element>
-    <creationDate>2017-03-17</creationDate>
+    <creationDate>2017-05-31</creationDate>
 
     <author>Galaxiis</author>
     <authorEmail>galaxiiscom@gmail.com</authorEmail>
     <authorUrl>www.galaxiis.com</authorUrl>
 
-    <version>3.0.2</version>
+    <version>3.0.11</version>
 
-    <copyright>Copyright (C) 2013-2016 galaxiis.com All rights reserved.</copyright>
+    <copyright>Copyright (C) 2013-2017 galaxiis.com All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL 3.0</license>
     <description></description>
 
