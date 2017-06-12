@@ -21,7 +21,7 @@ $document->addStyleSheet("https://netdna.bootstrapcdn.com/font-awesome/4.6.3/css
 
 ?>
 
-<h1>CedWordCloud 3.0.11 <?php echo $this->isFree; ?></h1>
+<h1>CedWordCloud 3.0.12 <?php echo $this->isFree; ?></h1>
 
 <div>
 

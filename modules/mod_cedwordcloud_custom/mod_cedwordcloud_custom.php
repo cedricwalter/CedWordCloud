@@ -19,7 +19,9 @@ require_once JPATH_SITE . '/components/com_cedwordcloud/helpers/rotating.php';
 require_once __DIR__ . '/helper.php';
 
 $tags = $params->get('tags');
-$list = CedWordcloudCustomHelper::getList($tags);
+$cloud_limit = $params->get('cloud_limit', 25);
+
+$list = CedWordcloudCustomHelper::getList($tags, $cloud_limit);
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 

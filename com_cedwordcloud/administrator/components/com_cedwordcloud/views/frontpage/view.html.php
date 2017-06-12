@@ -27,7 +27,7 @@ class CedWordcloudViewFrontpage extends JViewLegacy
 
     function defaultTpl($tpl = null)
     {
-        $version = "3.0.11";
+        $version = "3.0.12";
         $isFree = strpos($version, 'free') !== false ? " " : " (Licensed) ";
         JToolBarHelper::title(JText::_('CedWordcloud '). $version. $isFree , 'tag.png');
 

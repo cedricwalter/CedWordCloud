@@ -16,9 +16,9 @@ defined('_JEXEC') or die('Restricted access');
 class CedWordcloudCustomHelper
 {
 
-    public static function getList($tags)
+    public static function getList($tags, $cloud_limit)
     {
-    	$list = array();
+        $list = array();
 
 
         return $list;

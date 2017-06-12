@@ -27,7 +27,7 @@ class CedWordCloudGenerator
 
     public function getScriptUrl()
     {
-        return JUri::base() . "media/com_cedwordcloud/js/wordcloud2.js?v=3.0.11";
+        return JUri::base() . "media/com_cedwordcloud/js/wordcloud2.js?v=3.0.12";
     }
 
     public function getClickableScriptDeclaration($params, $list)

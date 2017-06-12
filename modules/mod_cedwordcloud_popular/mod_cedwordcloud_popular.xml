@@ -3,14 +3,14 @@
     <name>CedWordcloud Popular | Galaxiis.com</name>
 
     <author>Galaxiis</author>
-    <creationDate>2017-05-31</creationDate>
+    <creationDate>2017-06-12</creationDate>
 
     <copyright>Copyright (C) 2013-2017 galaxiis.com All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL 3.0</license>
     <authorEmail>galaxiiscom@gmail.com</authorEmail>
     <authorUrl>www.galaxiis.com</authorUrl>
 
-    <version>3.0.11</version>
+    <version>3.0.12</version>
 
     <description>MOD_CEDWORDCLOUD_POPULAR_XML_DESCRIPTION</description>
     <languages>
@@ -43,7 +43,7 @@
                         name="version_msg"
                         type="galaxiismessage"
                         message="version"
-                        version="3.0.11"
+                        version="3.0.12"
                         extension_name="CedWordCloud"/>
                 <field
                         name="maximum"
