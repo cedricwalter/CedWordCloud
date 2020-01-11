@@ -3,14 +3,14 @@
     <name>MOD_CEDWORDCLOUD_K2</name>
 
     <author>Galaxiis</author>
-    <creationDate>2017-06-12</creationDate>
+    <creationDate>2020-01-11</creationDate>
 
-    <copyright>Copyright (C) 2013-2017 galaxiis.com All rights reserved.</copyright>
+    <copyright>Copyright (C) 2013-2019 galaxiis.com All rights reserved.</copyright>
     <license>http://confluence.galaxiis.com/display/GAL/SOFTWARE+LICENSE+AGREEMENT</license>
     <authorEmail>galaxiiscom@gmail.com</authorEmail>
     <authorUrl>www.galaxiis.com</authorUrl>
 
-    <version>3.0.12</version>
+    <version>3.9.14</version>
 
     <description>MOD_CEDWORDCLOUD_K2_XML_DESCRIPTION</description>
     <languages>
@@ -50,7 +50,7 @@
                         name="version_msg"
                         type="galaxiismessage"
                         message="version"
-                        version="3.0.12"
+                        version="3.9.14"
                         extension_name="CedWordCloud"/>
             </fieldset>
             <fieldset name="Tags" label="Tags" addfieldpath="/administrator/components/com_k2/elements/">

@@ -1,8 +1,8 @@
 /*!
- * wordcloud2.js 1.0.5
+ * wordcloud2.js 1.1.1
  * http://timdream.org/wordcloud2.js/
  *
- * Copyright 2011 - 2013 Tim Chien
+ * Copyright 2011 - 2019 Tim Guan-tin Chien and contributors.
  * Released under the MIT license
  */
 
@@ -39,7 +39,7 @@ if (!window.setImmediate) {
                     // object with another in the presence of iframe
                     if (typeof evt.data !== 'string' ||
                         evt.data.substr(0, message.length) !== message/* ||
-                     evt.source !== window */) {
+            evt.source !== window */) {
                         return;
                     }
 
@@ -54,7 +54,7 @@ if (!window.setImmediate) {
                     callbacks[id] = undefined;
                 }, true);
 
-              /* specify clearImmediate() here since we need the scope */
+                /* specify clearImmediate() here since we need the scope */
                 window.clearImmediate = function clearZeroTimeout(id) {
                     if (!callbacks[id]) {
                         return;
@@ -96,6 +96,9 @@ if (!window.clearImmediate) {
         }
 
         var ctx = canvas.getContext('2d');
+        if (!ctx) {
+            return false;
+        }
         if (!ctx.getImageData) {
             return false;
         }
@@ -173,13 +176,12 @@ if (!window.clearImmediate) {
             }
         });
 
-      /* Default values to be overwritten by options object */
+        /* Default values to be overwritten by options object */
         var settings = {
             list: [],
             fontFamily: '"Trebuchet MS", "Heiti TC", "微軟正黑體", ' +
-            '"Arial Unicode MS", "Droid Fallback Sans", sans-serif',
+                '"Arial Unicode MS", "Droid Fallback Sans", sans-serif',
             fontWeight: 'normal',
-            fontStyle: 'normal',
             color: 'random-dark',
             minSize: 0, // 0 to disable
             weightFactor: 1,
@@ -188,6 +190,7 @@ if (!window.clearImmediate) {
 
             gridSize: 8,
             drawOutOfBound: false,
+            shrinkToFit: false,
             origin: null,
 
             drawMask: false,
@@ -222,7 +225,7 @@ if (!window.clearImmediate) {
             }
         }
 
-      /* Convert weightFactor into a function */
+        /* Convert weightFactor into a function */
         if (typeof settings.weightFactor !== 'function') {
             var factor = settings.weightFactor;
             settings.weightFactor = function weightFactor(pt) {
@@ -230,7 +233,7 @@ if (!window.clearImmediate) {
             };
         }
 
-      /* Convert shape into a function */
+        /* Convert shape into a function */
         if (typeof settings.shape !== 'function') {
             switch (settings.shape) {
                 case 'circle':
@@ -248,24 +251,34 @@ if (!window.clearImmediate) {
 
                 /*
 
-                 To work out an X-gon, one has to calculate "m",
-                 where 1/(cos(2*PI/X)+m*sin(2*PI/X)) = 1/(cos(0)+m*sin(0))
-                 http://www.wolframalpha.com/input/?i=1%2F%28cos%282*PI%2FX%29%2Bm*sin%28
-                 2*PI%2FX%29%29+%3D+1%2F%28cos%280%29%2Bm*sin%280%29%29
+                To work out an X-gon, one has to calculate "m",
+                where 1/(cos(2*PI/X)+m*sin(2*PI/X)) = 1/(cos(0)+m*sin(0))
+                http://www.wolframalpha.com/input/?i=1%2F%28cos%282*PI%2FX%29%2Bm*sin%28
+                2*PI%2FX%29%29+%3D+1%2F%28cos%280%29%2Bm*sin%280%29%29
 
-                 Copy the solution into polar equation r = 1/(cos(t') + m*sin(t'))
-                 where t' equals to mod(t, 2PI/X);
+                Copy the solution into polar equation r = 1/(cos(t') + m*sin(t'))
+                where t' equals to mod(t, 2PI/X);
 
-                 */
+                */
 
                 case 'diamond':
-                case 'square':
                     // http://www.wolframalpha.com/input/?i=plot+r+%3D+1%2F%28cos%28mod+
                     // %28t%2C+PI%2F2%29%29%2Bsin%28mod+%28t%2C+PI%2F2%29%29%29%2C+t+%3D
                     // +0+..+2*PI
                     settings.shape = function shapeSquare(theta) {
                         var thetaPrime = theta % (2 * Math.PI / 4);
                         return 1 / (Math.cos(thetaPrime) + Math.sin(thetaPrime));
+                    };
+                    break;
+
+                case 'square':
+                    // http://www.wolframalpha.com/input/?i=plot+r+%3D+min(1%2Fabs(cos(t
+                    // )),1%2Fabs(sin(t)))),+t+%3D+0+..+2*PI
+                    settings.shape = function shapeSquare(theta) {
+                        return Math.min(
+                            1 / Math.abs(Math.cos(theta)),
+                            1 / Math.abs(Math.sin(theta))
+                        );
                     };
                     break;
 
@@ -312,28 +325,28 @@ if (!window.clearImmediate) {
             }
         }
 
-      /* Make sure gridSize is a whole number and is not smaller than 4px */
+        /* Make sure gridSize is a whole number and is not smaller than 4px */
         settings.gridSize = Math.max(Math.floor(settings.gridSize), 4);
 
-      /* shorthand */
+        /* shorthand */
         var g = settings.gridSize;
         var maskRectWidth = g - settings.maskGapWidth;
 
-      /* normalize rotation settings */
+        /* normalize rotation settings */
         var rotationRange = Math.abs(settings.maxRotation - settings.minRotation);
         var rotationSteps = Math.abs(Math.floor(settings.rotationSteps));
         var minRotation = Math.min(settings.maxRotation, settings.minRotation);
 
-      /* information/object available to all functions, set when start() */
+        /* information/object available to all functions, set when start() */
         var grid, // 2d array containing filling information
             ngx, ngy, // width and height of the grid
             center, // position of the center of the cloud
             maxRadius;
 
-      /* timestamp for measuring each putWord() action */
+        /* timestamp for measuring each putWord() action */
         var escapeTime;
 
-      /* function for getting the color of the text */
+        /* function for getting the color of the text */
         var getTextColor;
         function random_hsl_color(min, max) {
             return 'hsl(' +
@@ -361,13 +374,19 @@ if (!window.clearImmediate) {
                 break;
         }
 
-      /* function for getting the classes of the text */
+        /* function for getting the font-weight of the text */
+        var getTextFontWeight;
+        if (typeof settings.fontWeight === 'function') {
+            getTextFontWeight = settings.fontWeight;
+        }
+
+        /* function for getting the classes of the text */
         var getTextClasses = null;
         if (typeof settings.classes === 'function') {
             getTextClasses = settings.classes;
         }
 
-      /* Interactive */
+        /* Interactive */
         var interactive = false;
         var infoGrid = [];
         var hovered;
@@ -423,7 +442,7 @@ if (!window.clearImmediate) {
             evt.preventDefault();
         };
 
-      /* Get points on the grid for a given radius away from the center */
+        /* Get points on the grid for a given radius away from the center */
         var pointsAtRadius = [];
         var getPointsAtRadius = function getPointsAtRadius(radius) {
             if (pointsAtRadius[radius]) {
@@ -460,13 +479,13 @@ if (!window.clearImmediate) {
             return points;
         };
 
-      /* Return true if we had spent too much time */
+        /* Return true if we had spent too much time */
         var exceedTime = function exceedTime() {
             return ((settings.abortThreshold > 0) &&
-            ((new Date()).getTime() - escapeTime > settings.abortThreshold));
+                ((new Date()).getTime() - escapeTime > settings.abortThreshold));
         };
 
-      /* Get the deg of rotation according to settings, and luck. */
+        /* Get the deg of rotation according to settings, and luck. */
         var getRotateDeg = function getRotateDeg() {
             if (settings.rotateRatio === 0) {
                 return 0;
@@ -481,9 +500,10 @@ if (!window.clearImmediate) {
             }
 
             if (rotationSteps > 0) {
+                // Min rotation + zero or more steps * span of one step
                 return minRotation +
-                    (1 / Math.floor((Math.random() * rotationSteps) + 1)) *
-                    rotationRange;
+                    Math.floor(Math.random() * rotationSteps) *
+                    rotationRange / (rotationSteps - 1);
             }
             else {
                 return minRotation + Math.random() * rotationRange;
@@ -514,17 +534,25 @@ if (!window.clearImmediate) {
                 })();
             }
 
+            // Get fontWeight that will be used to set fctx.font
+            var fontWeight;
+            if (getTextFontWeight) {
+                fontWeight = getTextFontWeight(word, weight, fontSize);
+            } else {
+                fontWeight = settings.fontWeight;
+            }
+
             var fcanvas = document.createElement('canvas');
             var fctx = fcanvas.getContext('2d', { willReadFrequently: true });
 
-            fctx.font =  settings.fontWeight + ' ' +
+            fctx.font = fontWeight + ' ' +
                 (fontSize * mu).toString(10) + 'px ' + settings.fontFamily;
 
             // Estimate the dimension of the text with measureText().
             var fw = fctx.measureText(word).width / mu;
             var fh = Math.max(fontSize * mu,
-                    fctx.measureText('m').width,
-                    fctx.measureText('\uFF37').width) / mu;
+                fctx.measureText('m').width,
+                fctx.measureText('\uFF37').width) / mu;
 
             // Create a boundary box that is larger than our estimates,
             // so text don't get cut of (it sill might)
@@ -570,7 +598,7 @@ if (!window.clearImmediate) {
 
             // Once the width/height is set, ctx info will be reset.
             // Set it again here.
-            fctx.font = settings.fontWeight + ' ' +
+            fctx.font = fontWeight + ' ' +
                 (fontSize * mu).toString(10) + 'px ' + settings.fontFamily;
 
             // Fill the text into the fcanvas.
@@ -666,7 +694,7 @@ if (!window.clearImmediate) {
             };
         };
 
-      /* Determine if there is room available in the given dimension */
+        /* Determine if there is room available in the given dimension */
         var canFitText = function canFitText(gx, gy, gw, gh, occupied) {
             // Go through the occupied points,
             // return false if the space is not available.
@@ -689,7 +717,7 @@ if (!window.clearImmediate) {
             return true;
         };
 
-      /* Actually draw the text on the grid */
+        /* Actually draw the text on the grid */
         var drawText = function drawText(gx, gy, info, word, weight,
                                          distance, theta, rotateDeg, attributes) {
 
@@ -701,9 +729,17 @@ if (!window.clearImmediate) {
                 color = settings.color;
             }
 
+            // get fontWeight that will be used to set ctx.font and font style rule
+            var fontWeight;
+            if (getTextFontWeight) {
+                fontWeight = getTextFontWeight(word, weight, fontSize);
+            } else {
+                fontWeight = settings.fontWeight;
+            }
+
             var classes;
             if (getTextClasses) {
-                classes = getTextClasses(word, weight, fontSize, distance, theta);
+                classes = getTextClasses(word, weight, fontSize);
             } else {
                 classes = settings.classes;
             }
@@ -726,7 +762,7 @@ if (!window.clearImmediate) {
                     ctx.save();
                     ctx.scale(1 / mu, 1 / mu);
 
-                    ctx.font = settings.fontWeight + ' ' +
+                    ctx.font = fontWeight + ' ' +
                         (fontSize * mu).toString(10) + 'px ' + settings.fontFamily;
                     ctx.fillStyle = color;
 
@@ -751,8 +787,8 @@ if (!window.clearImmediate) {
                         (info.fillTextOffsetY + fontSize * 0.5) * mu);
 
                     // The below box is always matches how <span>s are positioned
-                  /* ctx.strokeRect(info.fillTextOffsetX, info.fillTextOffsetY,
-                   info.fillTextWidth, info.fillTextHeight); */
+                    /* ctx.strokeRect(info.fillTextOffsetX, info.fillTextOffsetY,
+                      info.fillTextWidth, info.fillTextHeight); */
 
                     // Restore the state.
                     ctx.restore();
@@ -769,8 +805,8 @@ if (!window.clearImmediate) {
                     var styleRules = {
                         'position': 'absolute',
                         'display': 'block',
-                        'font': settings.fontWeight + ' ' +
-                        (fontSize * info.mu) + 'px ' + settings.fontFamily,
+                        'font': fontWeight + ' ' +
+                            (fontSize * info.mu) + 'px ' + settings.fontFamily,
                         'left': ((gx + info.gw / 2) * g + info.fillTextOffsetX) + 'px',
                         'top': ((gy + info.gh / 2) * g + info.fillTextOffsetY) + 'px',
                         'width': info.fillTextWidth + 'px',
@@ -804,7 +840,7 @@ if (!window.clearImmediate) {
             });
         };
 
-      /* Help function to updateGrid */
+        /* Help function to updateGrid */
         var fillGridAt = function fillGridAt(x, y, drawMask, dimension, item) {
             if (x >= ngx || y >= ngy || x < 0 || y < 0) {
                 return;
@@ -822,8 +858,8 @@ if (!window.clearImmediate) {
             }
         };
 
-      /* Update the filling information of the given space with occupied points.
-       Draw the mask on the canvas if necessary. */
+        /* Update the filling information of the given space with occupied points.
+           Draw the mask on the canvas if necessary. */
         var updateGrid = function updateGrid(gx, gy, gw, gh, info, item) {
             var occupied = info.occupied;
             var drawMask = settings.drawMask;
@@ -862,9 +898,9 @@ if (!window.clearImmediate) {
             }
         };
 
-      /* putWord() processes each item on the list,
-       calculate it's size and determine it's position, and actually
-       put it on the canvas. */
+        /* putWord() processes each item on the list,
+           calculate it's size and determine it's position, and actually
+           put it on the canvas. */
         var putWord = function putWord(item) {
             var word, weight, attributes;
             if (Array.isArray(item)) {
@@ -946,29 +982,39 @@ if (!window.clearImmediate) {
                     return true;
                 }
             }
+            if (settings.shrinkToFit) {
+                if (Array.isArray(item)) {
+                    item[1] = item[1] * 3 / 4;
+                } else {
+                    item.weight = item.weight * 3 / 4;
+                }
+                return putWord(item);
+            }
             // we tried all distances but text won't fit, return false
             return false;
         };
 
-      /* Send DOM event to all elements. Will stop sending event and return
-       if the previous one is canceled (for cancelable events). */
-        var sendEvent = function sendEvent(type, cancelable, detail) {
+        /* Send DOM event to all elements. Will stop sending event and return
+           if the previous one is canceled (for cancelable events). */
+        var sendEvent = function sendEvent(type, cancelable, details) {
             if (cancelable) {
                 return !elements.some(function(el) {
-                    var evt = document.createEvent('CustomEvent');
-                    evt.initCustomEvent(type, true, cancelable, detail || {});
-                    return !el.dispatchEvent(evt);
+                    var event = new CustomEvent(type, {
+                        detail: details || {}
+                    });
+                    return !el.dispatchEvent(event);
                 }, this);
             } else {
                 elements.forEach(function(el) {
-                    var evt = document.createEvent('CustomEvent');
-                    evt.initCustomEvent(type, true, cancelable, detail || {});
-                    el.dispatchEvent(evt);
+                    var event = new CustomEvent(type, {
+                        detail: details || {}
+                    });
+                    el.dispatchEvent(event);
                 }, this);
             }
         };
 
-      /* Start drawing on a canvas */
+        /* Start drawing on a canvas */
         var start = function start() {
             // For dimensions, clearCanvas etc.,
             // we only care about the first element.
@@ -997,8 +1043,8 @@ if (!window.clearImmediate) {
             // Maxium radius to look for space
             maxRadius = Math.floor(Math.sqrt(ngx * ngx + ngy * ngy));
 
-          /* Clear the canvas only if the clearCanvas is set,
-           if not, update the grid to the current canvas state */
+            /* Clear the canvas only if the clearCanvas is set,
+               if not, update the grid to the current canvas state */
             grid = [];
 
             var gx, gy, i;
@@ -1016,7 +1062,7 @@ if (!window.clearImmediate) {
                     }
                 });
 
-              /* fill the grid with empty state */
+                /* fill the grid with empty state */
                 gx = ngx;
                 while (gx--) {
                     grid[gx] = [];
@@ -1026,17 +1072,17 @@ if (!window.clearImmediate) {
                     }
                 }
             } else {
-              /* Determine bgPixel by creating
-               another canvas and fill the specified background color. */
+                /* Determine bgPixel by creating
+                   another canvas and fill the specified background color. */
                 var bctx = document.createElement('canvas').getContext('2d');
 
                 bctx.fillStyle = settings.backgroundColor;
                 bctx.fillRect(0, 0, 1, 1);
                 var bgPixel = bctx.getImageData(0, 0, 1, 1).data;
 
-              /* Read back the pixels of the canvas we got to tell which part of the
-               canvas is empty.
-               (no clearCanvas only works with a canvas, not divs) */
+                /* Read back the pixels of the canvas we got to tell which part of the
+                   canvas is empty.
+                   (no clearCanvas only works with a canvas, not divs) */
                 var imageData =
                     canvas.getContext('2d').getImageData(0, 0, ngx * g, ngy * g).data;
 
@@ -1074,7 +1120,7 @@ if (!window.clearImmediate) {
 
                 interactive = true;
 
-              /* fill the grid with empty state */
+                /* fill the grid with empty state */
                 gx = ngx + 1;
                 while (gx--) {
                     infoGrid[gx] = [];
@@ -1086,10 +1132,6 @@ if (!window.clearImmediate) {
 
                 if (settings.click) {
                     canvas.addEventListener('click', wordcloudclick);
-                    canvas.addEventListener('touchstart', wordcloudclick);
-                    canvas.addEventListener('touchend', function (e) {
-                        e.preventDefault();
-                    });
                     canvas.style.webkitTapHighlightColor = 'rgba(0, 0, 0, 0)';
                 }
 
@@ -1174,4 +1216,3 @@ if (!window.clearImmediate) {
     }
 
 })(this); //jshint ignore:line
-0

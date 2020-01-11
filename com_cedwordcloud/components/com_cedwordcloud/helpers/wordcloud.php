@@ -3,7 +3,7 @@
  * @package     CedWordCloud
  * @subpackage  com_cedwordle
  * http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL 3.0</license>
- * @copyright   Copyright (C) 2013-2017 galaxiis.com All rights reserved.
+ * @copyright   Copyright (C) 2013-2019 galaxiis.com All rights reserved.
  * @license     The author and holder of the copyright of the software is Cédric Walter. The licensor and as such issuer of the license and bearer of the
  *              worldwide exclusive usage rights including the rights to reproduce, distribute and make the software available to the public
  *              in any form is Galaxiis.com
@@ -27,7 +27,7 @@ class CedWordCloudGenerator
 
     public function getScriptUrl()
     {
-        return JUri::base() . "media/com_cedwordcloud/js/wordcloud2.js?v=3.0.12";
+        return JUri::base() . "media/com_cedwordcloud/js/wordcloud2.js?v=3.9.14";
     }
 
     public function getClickableScriptDeclaration($params, $list)
@@ -91,7 +91,9 @@ class CedWordCloudGenerator
             var options$this->uuid =
             {
               list : [ $listResult ],
-              weightFactor:  1,
+              weightFactor: function (size) {
+                  return size * (1 + jQuery('#$this->id').width() / jQuery('#$this->id').height());
+              },
               gridSize: $gridSize,
               shape: '$shape',
               rotateRatio: $rotateRatio,
@@ -103,19 +105,23 @@ class CedWordCloudGenerator
               drawOutOfBound: $drawOutOfBound,
               shuffle: false,
               backgroundColor: '$backgroundColor',
+              shrinkToFit: true,
               $handler
             };
         } else  {
             var options$this->uuid =
             {
               list : [ $listResult ],
-              weightFactor:  1,
+              weightFactor: function (size) { 
+                return size * (1 + jQuery('#$this->id').width() / jQuery('#$this->id').height());
+              },
               gridSize: $gridSize,
               shape: '$shape',
               rotateRatio: $rotateRatio,
               minRotation: $minRotation,
               maxRotation: $maxRotation,
               hover: window.drawBox,
+              shrinkToFit: true,
               $color
               $fontFamily
               $fontWeight
@@ -128,10 +134,22 @@ class CedWordCloudGenerator
             };
         }
         
+         function resize(){    
+            var parentWidth = jQuery('#$this->id').parent().outerWidth();
+            var parentHeight =  jQuery('#$this->id').parent().outerHeight();
+            jQuery('#$this->id').attr('width', parentWidth);
+            jQuery('#$this->id').attr('height', parentWidth * 1.5);
+            
+            WordCloud(document.getElementById('$this->id'), options$this->uuid);
+         }
+        
 		jQuery(document).ready(function(){
-          WordCloud(document.getElementById('$this->id'), options$this->uuid);
+            WordCloud(document.getElementById('$this->id'), options$this->uuid);
+            resize();
+            jQuery(window).on('resize', function(){                      
+                resize();
+            });
         });
-		
 		";
     }
 
